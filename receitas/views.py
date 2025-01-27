@@ -8,7 +8,7 @@ def index(request):
     dados = {
         'receitas': receitas
     }
-
+    print(f'\nreceitas:\n{receitas}\n')
     return render(request, 'index.html', dados)
 
 def receita(request, receita_id):
@@ -23,4 +23,17 @@ def receita(request, receita_id):
 
 def buscar(request):
 
-    return render(request, 'buscar.html')
+    lista_receitas = Receita.objects.order_by('-date_receita').filter(publicada=True)
+    print(f'\nlista_receitas:\n{lista_receitas}')
+    if 'buscar' in request.GET:
+        nome_a_buscar = request.GET['buscar']
+        print(f'\nnome_a_buscar:{nome_a_buscar}\n')
+        if buscar:
+            lista_receitas = lista_receitas.filter(nome_receita__icontains=nome_a_buscar)
+
+    dados = {
+        'receitas' : lista_receitas
+    }
+    print(f'\ndados:{dados}\n')
+
+    return render(request, 'buscar.html',dados)
