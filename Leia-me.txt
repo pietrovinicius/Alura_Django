@@ -1,0 +1,7 @@
+
+#Para iniciar a aplicação:
+> Abra o terminal;
+> Execute os comandos:
+1) venv\Scripts\activate
+2) python manage.py runserver
+
