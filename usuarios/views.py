@@ -28,7 +28,7 @@ def cadastro(request):
             print(f"As senhas digitadas não são iguais...")
             return redirect('cadastro')
         if User.objects.filter(email=email).exists():
-            print(f"Email:{email} já cadastrado")
+            print(f"\nALERTA!\nEmail:{email} já cadastrado\n")
             return redirect('cadastro')
         
         print(f"Após verificações, será criado o user em banco de dados...")
@@ -43,11 +43,25 @@ def cadastro(request):
 
 def login(request):
     print(f'usuarios>views.py>login(request)')
+
+    if request.method == 'POST':
+        email = request.POST['email']
+        senha = request.POST['senha']
+        print(f"if request.method == 'POST':")
+        print(f'email: {email}')
+        print(f'senha: {senha}')
+
+        if email == '' or senha == '':
+            print(f'Os campos email ou senha não podem ficar em branco!!!')
+            return redirect('login')
+
+        return redirect('dashboard')
+    
     return render(request, 'usuarios/login.html')
 
 def dashboard(request):
     print(f'usuarios>views.py>dashboard(request)')
-    pass
+    return render(request, 'usuarios/dashboard.html')
 
 def logout(request):
     print(f'usuarios>views.py>logout(request)')
