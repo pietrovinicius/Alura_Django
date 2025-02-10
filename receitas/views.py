@@ -14,7 +14,7 @@ def receita(request, receita_id):
     receita = get_object_or_404(Receita, pk=receita_id)
     print(f'\ndef receita() {receita}')
     receita_a_exibir = {
-        'receita' : receita
+        'def receita' : receita
     }
     print(f'\nreceita_a_exibir: {receita}\n')
     return render(request, 'receita.html', receita_a_exibir)
@@ -25,7 +25,7 @@ def buscar(request):
     print(f'\nlista_receitas:\n{lista_receitas}')
     if 'buscar' in request.GET:
         nome_a_buscar = request.GET['buscar']
-        print(f'\nnome_a_buscar:{nome_a_buscar}\n')
+        print(f'\ndef buscar\nnome_a_buscar:{nome_a_buscar}\n')
         if buscar:
             lista_receitas = lista_receitas.filter(nome_receita__icontains=nome_a_buscar)
 
