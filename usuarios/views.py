@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.models import User
-from django.contrib import auth
+from django.contrib import auth, messages
 from receitas.models import Receita
 
 def cadastro(request):
@@ -28,15 +28,17 @@ def cadastro(request):
             return redirect('cadastro')
         if senha!=senha2:
             print(f"As senhas digitadas não são iguais...")
+            messages.error(request, 'As senhas não são iguais!')
             return redirect('cadastro')
         if User.objects.filter(email=email).exists():
             print(f"\nALERTA!\nEmail:{email} já cadastrado\n")
+            messages.error(request, f'Email:{email} já cadastrado!')
             return redirect('cadastro')
         
         print(f"Após verificações, será criado o user em banco de dados...")
         user = User.objects.create_user(username=nome, email=email, password=senha)
         user.save()
-        
+        messages.success(request, 'Usuário cadastrado com sucesso!')
         print(f'\nUsuario criado com sucesso!\n')
         return redirect('login')
     else:
