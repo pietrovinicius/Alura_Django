@@ -84,4 +84,8 @@ def logout(request):
     print(f'usuarios>views.py>logout(request)')
     auth.logout(request)
     return redirect('index')
+
+def cria_receita(request):
+    print(f'usuarios>views.py>cria_receita(request)')
+    return render(request, 'usuarios/cria_receita.html')
     
