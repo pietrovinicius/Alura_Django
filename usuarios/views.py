@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.models import User
+from django.contrib import auth
 
 def cadastro(request):
     print(f'\nusuarios>views.py>cadastro(request)')
@@ -54,15 +55,33 @@ def login(request):
         if email == '' or senha == '':
             print(f'Os campos email ou senha não podem ficar em branco!!!')
             return redirect('login')
+        if User.objects.filter(email=email).exists():
+            print(f"User.objects.filter(email=email).exists():\nEmail:{email}")
+            nome = User.objects.filter(email=email).values_list('username',flat=True).get()
+            print(f"nome = User.objects.filter(email=email).values_list('username')")
+            print(f"nome = {nome}")
 
-        return redirect('dashboard')
+            print(f"user = auth.authenticate(request, username=nome, password=senha):")
+            user = auth.authenticate(request, username=nome, password=senha)
+            print(f'user: {user}')
+
+            if user is not None:
+                auth.login(request, user)
+                print(f"Login Realizado com sucesso!!!")
+                return redirect('dashboard')
+        
     
     return render(request, 'usuarios/login.html')
 
 def dashboard(request):
     print(f'usuarios>views.py>dashboard(request)')
-    return render(request, 'usuarios/dashboard.html')
+    if request.user.is_authenticated:
+        return render(request, 'usuarios/dashboard.html')
+    else:
+        return redirect('index')
 
 def logout(request):
     print(f'usuarios>views.py>logout(request)')
-    pass
+    auth.logout(request)
+    return redirect('index')
+    
