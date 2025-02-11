@@ -14,7 +14,7 @@ def receita(request, receita_id):
     receita = get_object_or_404(Receita, pk=receita_id)
     print(f'\ndef receita() {receita}')
     receita_a_exibir = {
-        'def receita' : receita
+        'receita' : receita
     }
     print(f'\nreceita_a_exibir: {receita}\n')
     return render(request, 'receita.html', receita_a_exibir)
