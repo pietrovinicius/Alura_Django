@@ -7,7 +7,7 @@ from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 def index(request):
     receitas = Receita.objects.order_by('-date_receita').filter(publicada=True)
     print(f'\ndef index() receitas:\n{receitas}\n')
-    paginator = Paginator(receitas,3)
+    paginator = Paginator(receitas,6)
     page = request.GET.get('page')
     
     #definição do nr de receitas por página:
