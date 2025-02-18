@@ -95,3 +95,14 @@ def campo_vazio(campo):
 
 def senhas_nao_sao_iguais(senha, senha2):
     return senha != senha2
+
+def atualiza_receita(request):
+    if request.method == 'POST':
+        receita_id = request.POST['receita_id']
+        r = Receita.objects.get(pk=receita_id)
+        r.nome_receita = request.POST['nome_receita']
+        r.ingredientes = request.POST['ingredientes']
+        r.modo_preparo = request.POST['modo_preparo']
+        r.tempo_preparo = request.POST['tempo_preparo']
+        r.rendimento = request.POST['rendimento']
+        r.categoria = request.POST['categoria']
