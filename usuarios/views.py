@@ -106,3 +106,7 @@ def atualiza_receita(request):
         r.tempo_preparo = request.POST['tempo_preparo']
         r.rendimento = request.POST['rendimento']
         r.categoria = request.POST['categoria']
+        if 'foto_receita' in request.FILES:
+            r.foto_receita = request.FILES['foto_receita']
+        r.save()
+        return redirect('dashboard')
